@@ -41,7 +41,7 @@ class VetControllerTest implements ControllerTests {
     }
 
     static class ModelMapImpl implements Model {
-        private Map<String, Object> data = new HashMap<>();
+        private final Map<String, Object> data = new HashMap<>();
 
         @Override
         public void addAttribute(String key, Object o) {
