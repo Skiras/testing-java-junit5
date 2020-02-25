@@ -11,9 +11,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.then;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.BDDMockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class SpecialitySDJpaServiceTest {
@@ -48,7 +47,7 @@ class SpecialitySDJpaServiceTest {
 
         // then
         assertThat(actualSpeciality).isNotNull();
-        then(specialtyRepository).should().findById(anyLong());
+        then(specialtyRepository).should(timeout(100)).findById(anyLong());
         then(specialtyRepository).shouldHaveNoMoreInteractions();
     }
 
@@ -61,7 +60,7 @@ class SpecialitySDJpaServiceTest {
         service.deleteById(1L);
 
         // then
-        then(specialtyRepository).should(times(2)).deleteById(1L);
+        then(specialtyRepository).should(timeout(100).times(2)).deleteById(1L);
     }
 
     @Test
@@ -73,7 +72,7 @@ class SpecialitySDJpaServiceTest {
         service.deleteById(1L);
 
         // then
-        then(specialtyRepository).should(atLeastOnce()).deleteById(1L);
+        then(specialtyRepository).should(timeout(1000).atLeastOnce()).deleteById(1L);
     }
 
     @Test
@@ -105,5 +104,40 @@ class SpecialitySDJpaServiceTest {
 
         // then
         then(specialtyRepository).should().delete(any());
+    }
+
+    @Test
+    void testDoThrow() {
+        doThrow(new RuntimeException("")).when(specialtyRepository).delete(any());
+
+        assertThrows(RuntimeException.class, () -> service.delete(new Speciality()));
+
+        verify(specialtyRepository).delete(any());
+    }
+
+    @Test
+    void testFindByIdThrow() {
+        willThrow(new RuntimeException("")).given(specialtyRepository).findById(anyLong());
+        // given(specialtyRepository.findById(anyLong())).willThrow(new RuntimeException(""));
+
+        assertThrows(RuntimeException.class, () -> service.findById(1L));
+        then(specialtyRepository).should().findById(anyLong());
+    }
+
+    @Test
+    void testSaveLambda() {
+        // given
+        String matchMe = "MATCH_ME";
+        Speciality speciality = new Speciality();
+        speciality.setDescription(matchMe);
+
+        Speciality savedSpecialty = new Speciality();
+        savedSpecialty.setId(1L);
+
+        given(specialtyRepository.save(argThat(arg -> arg.getDescription().equals(matchMe)))).willReturn(savedSpecialty);
+
+        Speciality returnedSpecialty = service.save(speciality);
+
+        assertThat(returnedSpecialty.getId()).isEqualTo(1L);
     }
 }
