@@ -15,7 +15,7 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class VetControllerTest implements ControllerTests {
+class VetControllerTest implements ControllerTest {
 
     private VetController controller;
 
@@ -40,7 +40,7 @@ class VetControllerTest implements ControllerTests {
         assertThat(actualVets).extracting("id").containsExactlyInAnyOrder(1L, 2L);
     }
 
-    static class ModelMapImpl implements Model {
+    private static class ModelMapImpl implements Model {
         private final Map<String, Object> data = new HashMap<>();
 
         @Override

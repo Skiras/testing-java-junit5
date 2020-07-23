@@ -10,6 +10,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * JUnit @Nested tests example
+ */
 @DisplayName("Owner Map Service Test - ")
 class OwnerMapServiceTest {
 

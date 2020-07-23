@@ -8,9 +8,15 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class IndexControllerTest implements ControllerTests {
+/**
+ * JUnit assertions examples, AssertJ example, test exception throw
+ */
+class IndexControllerTest implements ControllerTest {
 
-    IndexController controller;
+    private static final String INDEX = "index";
+    private static final String WRONG_VIEW_MSG = "Wrong view returned";
+
+    private IndexController controller;
 
     @BeforeEach
     void setUp() {
@@ -21,13 +27,14 @@ class IndexControllerTest implements ControllerTests {
     @Test
     void index() {
         String index = controller.index();
-        assertEquals("index", index, "Wrong view returned");
+        assertEquals(INDEX, index, WRONG_VIEW_MSG);
         // message processing with lambda will be executed only if assert fails
-        assertEquals("index", index, () -> "Wrong view returned");
+        assertEquals(INDEX, index, () -> WRONG_VIEW_MSG);
+        // AssertJ
         assertThat(index).isEqualTo("index");
     }
 
-    @DisplayName("Test exception")
+    @DisplayName("Test value not found exception")
     @Test
     void oopsHandler() {
         assertThrows(ValueNotFoundException.class, () -> controller.oopsHandler());

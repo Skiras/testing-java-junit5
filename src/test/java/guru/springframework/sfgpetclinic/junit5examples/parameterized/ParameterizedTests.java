@@ -39,8 +39,7 @@ public class ParameterizedTests {
 
     @DisplayName("CSV file source test - ")
     @ParameterizedTest(name = DISPLAY_NAME_PLACEHOLDER + " " + DEFAULT_DISPLAY_NAME)
-    // skips header
-    @CsvFileSource(resources = "/input.csv", numLinesToSkip = 1)
+    @CsvFileSource(resources = "/input.csv", /* skips header */ numLinesToSkip = 1)
     void csvFileInputTest(String stateName, int val1, int val2) {
         System.out.println(stateName + " - " + val1 + " - " + val2);
     }

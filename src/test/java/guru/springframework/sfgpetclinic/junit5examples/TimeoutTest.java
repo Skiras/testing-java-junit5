@@ -13,6 +13,7 @@ public class TimeoutTest {
 
     @Test
     void testTimeout() {
+        // single thread
         assertTimeout(Duration.ofMillis(100), () -> {
             Thread.sleep(2000);
             System.out.println("I got here");
@@ -21,6 +22,7 @@ public class TimeoutTest {
 
     @Test
     void testTimeoutPreemptively() {
+        // spawns separate thread and terminates it after duration time
         assertTimeoutPreemptively(Duration.ofMillis(100), () -> {
             Thread.sleep(2000);
             System.out.println("I don't got here because of preemptively");

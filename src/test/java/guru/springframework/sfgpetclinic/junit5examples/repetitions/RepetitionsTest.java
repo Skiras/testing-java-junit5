@@ -18,8 +18,8 @@ public class RepetitionsTest implements RepeatedTestDi {
         System.out.println(testInfo.getDisplayName() + " : " + repetitionInfo.getCurrentRepetition());
     }
 
-    @RepeatedTest(value = 10, name = "{displayName} : {currentRepetition} - {totalRepetitions}")
     @DisplayName("My repeated test")
+    @RepeatedTest(value = 10, name = "{displayName} : {currentRepetition} - {totalRepetitions}")
     void myRepeatedTestWithDiInterface() {
 
     }

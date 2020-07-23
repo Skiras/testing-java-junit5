@@ -1,8 +1,10 @@
-package guru.springframework.sfgpetclinic.services.springdatajpa;
+package guru.springframework.sfgpetclinic.junit5examples.junitextensions;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
+@ExtendWith(TimingExtension.class)
 class PetTypeSDJpaServiceTestIT {
 
     @BeforeEach

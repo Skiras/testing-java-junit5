@@ -5,10 +5,13 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class OwnerTest implements ModelTests {
+/**
+ * JUnit dependent assertions examples
+ */
+class OwnerTest implements ModelTest {
 
     @Test
-    void groupedAssertions() {
+    void dependentAssertions() {
         // given
         Owner owner = new Owner(1L, "Joe", "Buck");
         owner.setCity("West");
@@ -16,12 +19,12 @@ class OwnerTest implements ModelTests {
 
         // then
         assertAll("Test props set",
-                () -> assertAll("Person props",
+                () -> assertAll("Person properties",
                         () -> assertEquals("Joe", owner.getFirstName(), "First name did not match"),
-                        () -> assertEquals("Buck", owner.getLastName())),
-                () -> assertAll("Owner props",
+                        () -> assertEquals("Buck", owner.getLastName(), "Last name did not match")),
+                () -> assertAll("Owner properties",
                         () -> assertEquals("West", owner.getCity(), "City did not match"),
-                        () -> assertEquals("13112312421", owner.getTelephone())
+                        () -> assertEquals("13112312421", owner.getTelephone(), "Telephone did not match")
                 ));
 
     }
