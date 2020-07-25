@@ -1,5 +1,6 @@
-package guru.springframework.sfgpetclinic.controllers;
+package guru.springframework.sfgpetclinic.mockitoexamples.controllers;
 
+import guru.springframework.sfgpetclinic.controllers.VisitController;
 import guru.springframework.sfgpetclinic.model.Pet;
 import guru.springframework.sfgpetclinic.model.Visit;
 import guru.springframework.sfgpetclinic.services.VisitService;

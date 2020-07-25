@@ -1,5 +1,6 @@
-package guru.springframework.sfgpetclinic.controllers;
+package guru.springframework.sfgpetclinic.junit5examples.controllers;
 
+import guru.springframework.sfgpetclinic.controllers.VetController;
 import guru.springframework.sfgpetclinic.fauxspring.Model;
 import guru.springframework.sfgpetclinic.model.Vet;
 import guru.springframework.sfgpetclinic.services.VetService;

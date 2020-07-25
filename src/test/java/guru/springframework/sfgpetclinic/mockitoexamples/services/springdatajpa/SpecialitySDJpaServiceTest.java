@@ -1,7 +1,8 @@
-package guru.springframework.sfgpetclinic.services.springdatajpa;
+package guru.springframework.sfgpetclinic.mockitoexamples.services.springdatajpa;
 
 import guru.springframework.sfgpetclinic.model.Speciality;
 import guru.springframework.sfgpetclinic.repositories.SpecialtyRepository;
+import guru.springframework.sfgpetclinic.services.springdatajpa.SpecialitySDJpaService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,6 +18,8 @@ import static org.mockito.BDDMockito.*;
 @ExtendWith(MockitoExtension.class)
 class SpecialitySDJpaServiceTest {
 
+    private final static Long ID = 1L;
+
     @Mock
     private SpecialtyRepository specialtyRepository;
 
@@ -25,119 +28,96 @@ class SpecialitySDJpaServiceTest {
 
     @Test
     void testDeleteByObject() {
-        // given
         Speciality speciality = new Speciality();
 
-        // when
         service.delete(speciality);
 
-        // then
         then(specialtyRepository).should().delete(any(Speciality.class));
     }
 
     @Test
     void findByIdTest() {
-        // given
-        Speciality speciality = new Speciality();
+        given(specialtyRepository.findById(ID)).willReturn(Optional.of(new Speciality()));
 
-        given(specialtyRepository.findById(1L)).willReturn(Optional.of(speciality));
+        Speciality actualSpeciality = service.findById(ID);
 
-        // when
-        Speciality actualSpeciality = service.findById(1L);
-
-        // then
-        assertThat(actualSpeciality).isNotNull();
         then(specialtyRepository).should(timeout(100)).findById(anyLong());
         then(specialtyRepository).shouldHaveNoMoreInteractions();
+        assertThat(actualSpeciality).isNotNull();
     }
 
     @Test
     void deleteById() {
-        // given - none
+        service.deleteById(ID);
+        service.deleteById(ID);
 
-        // when
-        service.deleteById(1L);
-        service.deleteById(1L);
-
-        // then
-        then(specialtyRepository).should(timeout(100).times(2)).deleteById(1L);
+        then(specialtyRepository).should(timeout(100).times(2)).deleteById(ID);
     }
 
     @Test
     void deleteByIdAtLeast() {
-        // given - none
+        service.deleteById(ID);
+        service.deleteById(ID);
 
-        // when
-        service.deleteById(1L);
-        service.deleteById(1L);
-
-        // then
-        then(specialtyRepository).should(timeout(1000).atLeastOnce()).deleteById(1L);
+        then(specialtyRepository).should(timeout(1000).atLeastOnce()).deleteById(ID);
     }
 
     @Test
     void deleteByIdAtMost() {
-        // given - none
+        service.deleteById(ID);
+        service.deleteById(ID);
 
-        // when
-        service.deleteById(1L);
-        service.deleteById(1L);
-
-        // then
-        then(specialtyRepository).should(atMost(5)).deleteById(1L);
+        then(specialtyRepository).should(atMost(5)).deleteById(ID);
     }
 
     @Test
     void deleteByIdNever() {
-        // when
-        service.deleteById(1L);
-        service.deleteById(1L);
+        service.deleteById(ID);
+        service.deleteById(ID);
 
-        // then
         then(specialtyRepository).should(never()).deleteById(5L);
     }
 
     @Test
     void delete() {
-        // when
         service.delete(new Speciality());
 
-        // then
-        then(specialtyRepository).should().delete(any());
+        then(specialtyRepository).should().delete(any(Speciality.class));
     }
 
     @Test
     void testDoThrow() {
-        doThrow(new RuntimeException("")).when(specialtyRepository).delete(any());
+        doThrow(new RuntimeException()).when(specialtyRepository).delete(any(Speciality.class));
 
         assertThrows(RuntimeException.class, () -> service.delete(new Speciality()));
 
-        verify(specialtyRepository).delete(any());
+        verify(specialtyRepository).delete(any(Speciality.class));
     }
 
     @Test
     void testFindByIdThrow() {
-        willThrow(new RuntimeException("")).given(specialtyRepository).findById(anyLong());
-        // given(specialtyRepository.findById(anyLong())).willThrow(new RuntimeException(""));
+        given(specialtyRepository.findById(anyLong())).willThrow(new RuntimeException());
+        // if method returns void
+        // willThrow(new RuntimeException()).given(specialtyRepository).deleteById(anyLong());
 
         assertThrows(RuntimeException.class, () -> service.findById(1L));
+
         then(specialtyRepository).should().findById(anyLong());
     }
 
     @Test
     void testSaveLambda() {
-        // given
         String matchMe = "MATCH_ME";
         Speciality speciality = new Speciality();
         speciality.setDescription(matchMe);
 
         Speciality savedSpecialty = new Speciality();
-        savedSpecialty.setId(1L);
+        savedSpecialty.setId(ID);
 
         given(specialtyRepository.save(argThat(arg -> arg.getDescription().equals(matchMe)))).willReturn(savedSpecialty);
 
         Speciality returnedSpecialty = service.save(speciality);
 
-        assertThat(returnedSpecialty.getId()).isEqualTo(1L);
+        assertThat(returnedSpecialty.getId()).isEqualTo(ID);
     }
 }

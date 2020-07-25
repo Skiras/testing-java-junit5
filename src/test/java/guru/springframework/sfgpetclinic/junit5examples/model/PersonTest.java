@@ -1,5 +1,6 @@
-package guru.springframework.sfgpetclinic.model;
+package guru.springframework.sfgpetclinic.junit5examples.model;
 
+import guru.springframework.sfgpetclinic.model.Person;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

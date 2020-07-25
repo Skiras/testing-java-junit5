@@ -1,4 +1,4 @@
-package guru.springframework.sfgpetclinic.controllers;
+package guru.springframework.sfgpetclinic.junit5examples.controllers;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;

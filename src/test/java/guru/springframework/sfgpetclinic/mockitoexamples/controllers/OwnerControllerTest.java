@@ -1,5 +1,6 @@
-package guru.springframework.sfgpetclinic.controllers;
+package guru.springframework.sfgpetclinic.mockitoexamples.controllers;
 
+import guru.springframework.sfgpetclinic.controllers.OwnerController;
 import guru.springframework.sfgpetclinic.fauxspring.BindingResult;
 import guru.springframework.sfgpetclinic.fauxspring.Model;
 import guru.springframework.sfgpetclinic.model.Owner;
@@ -39,7 +40,7 @@ class OwnerControllerTest {
     private BindingResult bindingResult;
 
     @Captor
-    ArgumentCaptor<String> stringArgumentCaptor;
+    private ArgumentCaptor<String> stringArgumentCaptor;
 
     @BeforeEach
     void setUp() {
@@ -111,13 +112,13 @@ class OwnerControllerTest {
     @Test
     void processCreationFormNoErrors() {
         Owner savedOwner = new Owner(5L, "John", "John");
-        given(ownerService.save(any())).willReturn(savedOwner);
+        given(ownerService.save(any(Owner.class))).willReturn(savedOwner);
         given(bindingResult.hasErrors()).willReturn(false);
 
         String result = controller.processCreationForm(savedOwner, bindingResult);
 
         assertEquals(REDIRECT_OWNERS_5, result);
         then(bindingResult).should().hasErrors();
-        then(ownerService).should().save(any());
+        then(ownerService).should().save(any(Owner.class));
     }
 }

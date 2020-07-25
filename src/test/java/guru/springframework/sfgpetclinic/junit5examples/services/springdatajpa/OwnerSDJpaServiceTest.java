@@ -1,5 +1,6 @@
-package guru.springframework.sfgpetclinic.services.springdatajpa;
+package guru.springframework.sfgpetclinic.junit5examples.services.springdatajpa;
 
+import guru.springframework.sfgpetclinic.services.springdatajpa.OwnerSDJpaService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;

@@ -1,8 +1,11 @@
-package guru.springframework.sfgpetclinic.services.map;
+package guru.springframework.sfgpetclinic.junit5examples.services.map;
 
 import guru.springframework.sfgpetclinic.model.Owner;
 import guru.springframework.sfgpetclinic.model.PetType;
 import guru.springframework.sfgpetclinic.services.PetTypeService;
+import guru.springframework.sfgpetclinic.services.map.OwnerMapService;
+import guru.springframework.sfgpetclinic.services.map.PetMapService;
+import guru.springframework.sfgpetclinic.services.map.PetTypeMapService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

@@ -1,5 +1,7 @@
-package guru.springframework.sfgpetclinic.controllers;
+package guru.springframework.sfgpetclinic.junit5examples.controllers;
 
+import guru.springframework.sfgpetclinic.controllers.IndexController;
+import guru.springframework.sfgpetclinic.controllers.ValueNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +33,7 @@ class IndexControllerTest implements ControllerTest {
         // message processing with lambda will be executed only if assert fails
         assertEquals(INDEX, index, () -> WRONG_VIEW_MSG);
         // AssertJ
-        assertThat(index).isEqualTo("index");
+        assertThat(index).isEqualTo(INDEX);
     }
 
     @DisplayName("Test value not found exception")

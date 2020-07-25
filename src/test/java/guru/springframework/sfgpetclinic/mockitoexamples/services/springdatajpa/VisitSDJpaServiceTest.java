@@ -1,7 +1,8 @@
-package guru.springframework.sfgpetclinic.services.springdatajpa;
+package guru.springframework.sfgpetclinic.mockitoexamples.services.springdatajpa;
 
 import guru.springframework.sfgpetclinic.model.Visit;
 import guru.springframework.sfgpetclinic.repositories.VisitRepository;
+import guru.springframework.sfgpetclinic.services.springdatajpa.VisitSDJpaService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -19,6 +20,8 @@ import static org.mockito.BDDMockito.then;
 
 @ExtendWith(MockitoExtension.class)
 class VisitSDJpaServiceTest {
+
+    private final static Long ID = 1L;
 
     @Mock
     private VisitRepository visitRepository;
@@ -40,9 +43,9 @@ class VisitSDJpaServiceTest {
     void findById() {
         given(visitRepository.findById(anyLong())).willReturn(Optional.of(new Visit()));
 
-        Visit actualVisit = service.findById(1L);
+        Visit actualVisit = service.findById(ID);
 
-        then(visitRepository).should().findById(anyLong());
+        then(visitRepository).should().findById(ID);
         assertThat(actualVisit).isNotNull();
     }
 
@@ -65,8 +68,8 @@ class VisitSDJpaServiceTest {
 
     @Test
     void deleteById() {
-        service.deleteById(1L);
+        service.deleteById(ID);
 
-        then(visitRepository).should().deleteById(anyLong());
+        then(visitRepository).should().deleteById(ID);
     }
 }
